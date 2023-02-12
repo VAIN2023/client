@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "didot";
+  src: url("../assets/fonts/didot/Didot\ LT\ Std\ Bold.otf");
+}
