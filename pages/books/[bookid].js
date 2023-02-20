@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar'
 import Tag from '../../components/Tag'
 import { TbEdit } from 'react-icons/tb'
 import { IconContext } from 'react-icons'
+import Footer from '../../components/Footer'
 
 const Book = () => {
 	
@@ -32,7 +33,7 @@ const Book = () => {
 	
 	const page = (
 		<div className='w-11/12 m-auto md:w-8/12 lg:w-6/12 xl:w-5/12'>
-			<div className='mt-10'>
+			<div className='mt-10 pt-20'>
 				<div className='flex justify-between'>
 					<div></div>
 					<IconContext.Provider value={{className: "text-neutral-800"}}>

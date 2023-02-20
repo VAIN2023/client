@@ -1,29 +1,26 @@
 import Navbar from "../components/Navbar"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Filter from "../components/Filter"
 import Head from "next/head"
 import axios from "axios"
 import PaginatedItems from "../components/PaginatedItems"
 
-const search = () => {
-
-	const [books, setBooks] = useState([]);
-	const [filteredBooks, setFilteredBooks] = useState([]);
-
+export const getStaticProps = async () => {
 
 	const api_uri = process.env.NEXT_PUBLIC_API_LOCAL || "http://localhost:8080"
+	let res = await axios.get(`${api_uri}/books/descriptive`)
+	let data = res.data
 
-	useEffect( () => {
-		axios.get(`${api_uri}/books/descriptive`)
-			.then( res => {
-				console.log(res.data)
-				setBooks(res.data)
-				setFilteredBooks(res.data)
-			})
-			.catch( err => {
-				console.log(err)
-			})
-	}, [])
+	return {
+		props: {
+			books: data,
+		}
+	}
+}
+
+const Search = ( {books} ) => {
+
+	const [filteredBooks, setFilteredBooks] = useState([...books]);
 
 	const handleAppliedFilters = (filters) => {
 		let filteredList = [];
@@ -55,4 +52,4 @@ const search = () => {
     )
 }
 
-export default search
+export default Search

@@ -4,38 +4,29 @@ import Footer from '../components/Footer'
 import axios from 'axios'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-
 import { Fragment, useEffect, useState } from 'react'
 import Categories from '../components/Categories'
 
-const Home = () => {
-  const [type, setType] = useState({})
-  const [subject, setSubject] = useState({})
+export const getStaticProps = async () => {
 
-  const [subjects, setSubjects] = useState([])
-  const [types, setTypes] = useState([])
+	const api_uri = process.env.NEXT_PUBLIC_API_LOCAL || "http://localhost:8080"
 
-  const api_uri = process.env.NEXT_PUBLIC_API_LOCAL || "http://localhost:8080"
+	let subjectRes = await axios.get(`${api_uri}/subjects`)
+	let subjectData = subjectRes.data
+	let typeRes = await axios.get(`${api_uri}/types`)
+	let typeData = typeRes.data
 
-  useEffect( () => {
-    const endpoint = `${api_uri}`
+	return {
+		props: {
+			types: typeData,
+			subjects: subjectData
+		}
+	}
+}
 
-    axios.get(`${endpoint}/subjects`)
-      .then( res => {
-        setSubjects(res.data)
-        setSubject(res.data[0])
-      })
-      .catch( err => {
-        console.log(err)
-      })
-    
-      axios.get(`${endpoint}/types`)
-        .then( res => {
-          setTypes(res.data)
-          setType(res.data[0])
-        })
-  }, [])
-
+const Home = ( {types, subjects} ) => {
+  const [type, setType] = useState(types[0])
+  const [subject, setSubject] = useState(subjects[0])
 
   const subjectSelect = (
     <div className="col-start-4 col-span-2">
