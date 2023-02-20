@@ -15,11 +15,10 @@ const Book = () => {
 
 	const [book, setBook] = useState({})
 
-	const api_uri = "http://localhost:8080"
+	const api_uri = process.env.NEXT_PUBLIC_API_LOCAL || "http://localhost:8080"
 
 	useEffect( () => {
 			if (bookid !== undefined){
-				console.log(`${api_uri}/books/${bookid}`)
 				axios.get(`${api_uri}/books/${bookid}`)
 				.then( res => {
 					setBook(res.data[0])
